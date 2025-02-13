@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Smart Contract Auditor</title>
+</head>
+<body>
+    <h1>Smart Contract Auditor</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="contract" accept=".sol" required>
+        <button type="submit">Analyze Contract</button>
+    </form>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById("uploadForm").onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/analyze', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+        }
+    </script>
+</body>
+</html>
